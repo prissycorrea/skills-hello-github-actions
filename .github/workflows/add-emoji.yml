@@ -1,0 +1,28 @@
+name: Adicionar Emoji ao README
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}  # Faz checkout diretamente na branch da PR
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Adicionar emoji ao README
+        run: |
+          echo "🚀 Workflow rodou com sucesso!" >> README.md
+
+      - name: Commit e Push da alteração
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "Adicionando emoji ao README 🚀"
+          git push origin ${{ github.head_ref }}  # Faz push para a branch da PR

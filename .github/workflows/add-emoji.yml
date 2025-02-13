@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout do código
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}  # Usa o token embutido do GitHub
 
       - name: Adicionar emoji ao README
         run: |
@@ -22,4 +24,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
           git commit -m "Adicionando emoji ao README 🚀"
-          git push origin HEAD:${{ github.head_ref }}
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Define o token como variável de ambiente
